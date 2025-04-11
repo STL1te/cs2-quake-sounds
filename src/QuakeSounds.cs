@@ -80,6 +80,14 @@ namespace QuakeSounds
                     PlaySound(attacker, selfkillSound, "world");
                     PrintMessage(attacker, Config.Sounds["selfkill"]);
                 }
+                // check for team kill
+                else if (Config.Sounds.ContainsKey("teamkill")
+                    && victim != null && victim.IsValid && attacker.Team == victim.Team
+                    && Config.Sounds["teamkill"].TryGetValue("_sound", out string? teamkillSound))
+                {
+                    PlaySound(attacker, teamkillSound);
+                    PrintMessage(attacker, Config.Sounds["teamkill"]);
+                }
                 // check for first blood
                 else if (Config.Sounds.ContainsKey("firstblood")
                     && _playerKillsInRound.ContainsKey(attacker)
@@ -96,14 +104,6 @@ namespace QuakeSounds
                 {
                     PlaySound(attacker, knifekillSound);
                     PrintMessage(attacker, Config.Sounds["knifekill"]);
-                }
-                // check for team kill
-                else if (Config.Sounds.ContainsKey("teamkill")
-                    && victim != null && victim.IsValid && attacker.Team == victim.Team
-                    && Config.Sounds["teamkill"].TryGetValue("_sound", out string? teamkillSound))
-                {
-                    PlaySound(attacker, teamkillSound);
-                    PrintMessage(attacker, Config.Sounds["teamkill"]);
                 }
             }
             // check victim
