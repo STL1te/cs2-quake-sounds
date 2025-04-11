@@ -22,6 +22,7 @@ namespace QuakeSounds
             RegisterEventHandler<EventPlayerDeath>(OnPlayerDeath);
             RegisterEventHandler<EventPlayerConnectFull>(OnPlayerConnect);
             RegisterEventHandler<EventPlayerChat>(OnPlayerChatCommand);
+            RegisterListener<Listeners.OnMapStart>(OnMapStart);
             if (hotReload)
                 foreach (CCSPlayerController entry in Utilities.GetPlayers().Where(
                     p => p.IsValid
@@ -35,6 +36,7 @@ namespace QuakeSounds
             DeregisterEventHandler<EventPlayerDeath>(OnPlayerDeath);
             DeregisterEventHandler<EventPlayerConnectFull>(OnPlayerConnect);
             DeregisterEventHandler<EventPlayerChat>(OnPlayerChatCommand);
+            RemoveListener<Listeners.OnMapStart>(OnMapStart);
         }
 
         private HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
@@ -148,6 +150,12 @@ namespace QuakeSounds
             }
             // redraw GUI
             return HookResult.Continue;
+        }
+
+        private void OnMapStart(string mapName)
+        {
+            // reset player kills
+            _playerKillsInRound.Clear();
         }
 
         private void PlaySound(CCSPlayerController player, string sound, string? playOn = null)
