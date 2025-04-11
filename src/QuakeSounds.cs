@@ -170,8 +170,12 @@ namespace QuakeSounds
                 filter.Add(entry);
             if (sound.StartsWith("sounds/"))
             {
-                DebugPrint("Playing quake sound via client command.");
-                player.ExecuteClientCommand($"play {sound}");
+                DebugPrint("Playing quake sound via client command for all listening players.");
+                foreach (var entry in Utilities.GetPlayers().Where(
+                p => p.IsValid
+                    && !p.IsBot
+                    && !Config.PlayersMuted.Contains(p.NetworkIDString)).ToList())
+                    entry.ExecuteClientCommand($"play {sound}");
             }
             else if (Config.PlayOn.Equals("player", StringComparison.CurrentCultureIgnoreCase) && playOn == null
                     || playOn != null && playOn == "player")
