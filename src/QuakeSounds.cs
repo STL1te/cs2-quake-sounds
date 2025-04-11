@@ -52,8 +52,8 @@ namespace QuakeSounds
                 && attacker.IsValid)
             {
                 // check for self kill or team kill and whether to count them
-                if ((attacker != victim || Config.CountSelfKills)
-                    && (victim != null && victim.IsValid && attacker.Team != victim.Team || Config.CountTeamKills))
+                if (attacker != victim || Config.CountSelfKills
+                    || (victim != null && victim.IsValid && (attacker.Team != victim.Team || Config.CountTeamKills)))
                 {
                     if (_playerKillsInRound.ContainsKey(attacker))
                     {
