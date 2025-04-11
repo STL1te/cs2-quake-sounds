@@ -24,9 +24,119 @@ Updating is even easier: simply overwrite all plugin files and they will be relo
 This plugin automatically creates a readable JSON configuration file. This configuration file can be found in `/addons/counterstrikesharp/configs/plugins/QuakeSounds/QuakeSounds.json`.
 
 ```json
-
+{
+  "enabled": true,
+  "debug": false,
+  "play_on": "player",
+  "enable_center_message": true,
+  "center_message_type": "default",
+  "enable_chat_message": true,
+  "sounds": {
+    "3": {
+      "de": "Dreifach-Kill",
+      "en": "Triple Kill",
+      "_sound": "QuakeSoundsD.Triplekill"
+    },
+    "5": {
+      "de": "Multi-Kill",
+      "en": "Multi Kill",
+      "_sound": "QuakeSoundsD.Multikill"
+    },
+    "6": {
+      "de": "Multi-Kill",
+      "en": "Multi Kill",
+      "_sound": "QuakeSoundsD.Rampage"
+    },
+    "7": {
+      "de": "Abschuss-Serie",
+      "en": "Killing Spree",
+      "_sound": "QuakeSoundsD.Killingspree"
+    },
+    "8": {
+      "de": "Dominierend",
+      "en": "Dominating",
+      "_sound": "QuakeSoundsD.Dominating"
+    },
+    "9": {
+      "de": "Beeindruckend",
+      "en": "Impressive",
+      "_sound": "QuakeSoundsD.Impressive"
+    },
+    "10": {
+      "de": "Unstoppbar",
+      "en": "Unstoppable",
+      "_sound": "QuakeSoundsD.Unstoppable"
+    },
+    "firstblood": {
+      "de": "Erster Abschuss",
+      "en": "First Blood",
+      "_sound": "QuakeSoundsD.Firstblood"
+    },
+    "knifekill": {
+      "de": "Messer-Kill",
+      "en": "Knife Kill",
+      "_sound": "QuakeSoundsD.Haha"
+    },
+    "teamkill": {
+      "de": "Team-Kill",
+      "en": "Team Kill",
+      "_sound": "QuakeSoundsD.Teamkiller"
+    }
+  },
+  "player_muted": [
+    "[U:1:XXXX]"
+  ],
+  "player_languages": {
+    "[U:1:XXXX]": "de"
+  },
+  "ConfigVersion": 1
+}
 ```
 
+### enabled
+
+Whether this plug-in is enabled or not.
+
+### debug
+
+Debug mode. Only necessary during development or testing.
+
+### play_on
+Determines where the sound will play: either at the player's position or at a fixed world position. Note that using a world position can result in poorly placed sounds on custom maps, making them hard to hear. Playing the sound at the player's position may reveal their location. If you use a full sound path instead of a sound name, the sound will play at maximum volume without directional effects or volume control.
+
+### enable_center_message
+
+Whether or not to show a center message.
+
+### center_message_type
+
+Type of the center message. Can be one of the following:
+
+- default
+- alert
+- html
+
+### enable_chat_message
+
+Whether or not to enable chat messages.
+
+### sounds
+
+List of all sounds. The Key is either the amount of kills or a special key:
+
+- firstblood
+- knifekill
+- teamkill
+
+All sounds will contain a list of at least two entries. One is the *_sound* file name or path. If it is a file name you will need a Workshop Addon where these file names are defined. If you use a path, e.g. *sounds/cs2/quakesounds/default/haha.vsnd* you don't need a Workshop Addon. However the player must have the given file in his game files somewhere.
+
+### player_muted
+
+List of all muted Steam IDs. Players can use *!qs* to mute or unmute themself.
+
+### player_languages
+
+List of all players who used *!lang* to set their language. Currently it seems that plug-ins will not get the correct translation for a player. Therefore this plug-in intercepts the *!lang* command and saves the language for the player and loads it each time the player connects. This will ensure the proper translation for a given sound.
 
 ## Commands
 

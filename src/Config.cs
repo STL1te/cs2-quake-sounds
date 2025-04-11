@@ -11,16 +11,22 @@ namespace QuakeSounds
         [JsonPropertyName("enabled")] public bool Enabled { get; set; } = true;
         // debug prints
         [JsonPropertyName("debug")] public bool Debug { get; set; } = false;
+        // where to play sounds on (player, world)
+        [JsonPropertyName("play_on")] public string PlayOn { get; set; } = "player";
         // enable center message
         [JsonPropertyName("enable_center_message")] public bool CenterMessage { get; set; } = true;
         // center message typ (default, alert or html)
         [JsonPropertyName("center_message_type")] public string CenterMessageType { get; set; } = "default";
         // enable chat message
         [JsonPropertyName("enable_chat_message")] public bool ChatMessage { get; set; } = true;
+        // count self kills
+        [JsonPropertyName("count_self_kills")] public bool CountSelfKills { get; set; } = false;
+        // count team kills
+        [JsonPropertyName("count_team_kills")] public bool CountTeamKills { get; set; } = false;
         // sounds dict (language, string to match, sound path)
-        [JsonPropertyName("sounds")] public Dictionary<int, Dictionary<string, string>> Sounds { get; set; } = [];
+        [JsonPropertyName("sounds")] public Dictionary<string, Dictionary<string, string>> Sounds { get; set; } = [];
         // muted players
-        [JsonPropertyName("muted")] public List<string> Muted { get; set; } = [];
+        [JsonPropertyName("player_muted")] public List<string> PlayersMuted { get; set; } = [];
         // player languages
         [JsonPropertyName("player_languages")] public Dictionary<string, string> PlayerLanguages { get; set; } = [];
     }
@@ -34,9 +40,9 @@ namespace QuakeSounds
             Config = config;
             // sort Config.Sounds and sub dictionaries by key
             Config.Sounds = Config.Sounds
-                .OrderBy(x => x.Key)
+                .OrderBy(x => int.TryParse(x.Key, out var key) ? key : int.MaxValue)
                 .ToDictionary(x => x.Key, x => x.Value
-                    .OrderBy(y => y.Key)
+                    .OrderBy(y => int.TryParse(y.Key, out var key) ? key : int.MaxValue)
                     .ToDictionary(y => y.Key, y => y.Value));
             // update config and write new values from plugin to config file if changed after update
             Config.Update();
@@ -45,16 +51,16 @@ namespace QuakeSounds
 
         private bool ToggleMute(CCSPlayerController player)
         {
-            if (Config.Muted.Contains(player.NetworkIDString))
+            if (Config.PlayersMuted.Contains(player.NetworkIDString))
             {
-                Config.Muted.Remove(player.NetworkIDString);
+                Config.PlayersMuted.Remove(player.NetworkIDString);
                 Config.Update();
                 player.PrintToChat(Localizer["sounds.unmuted"]);
                 return false;
             }
             else
             {
-                Config.Muted.Add(player.NetworkIDString);
+                Config.PlayersMuted.Add(player.NetworkIDString);
                 Config.Update();
                 player.PrintToChat(Localizer["sounds.muted"]);
                 return true;

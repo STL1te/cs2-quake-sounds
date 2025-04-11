@@ -49,23 +49,48 @@ namespace QuakeSounds
             CCSPlayerController? victim = @event.Userid;
             // check attacker
             if (attacker != null
-                && attacker.IsValid
-                && attacker != victim)
+                && attacker.IsValid)
             {
-                if (_playerKillsInRound.ContainsKey(attacker))
+                // check for self kill or team kill and whether to count them
+                if ((attacker != victim || Config.CountSelfKills)
+                    && (victim != null && victim.IsValid && attacker.Team != victim.Team || Config.CountTeamKills))
                 {
-                    _playerKillsInRound[attacker]++;
-                }
-                else
-                {
-                    _playerKillsInRound.Add(attacker, 1);
+                    if (_playerKillsInRound.ContainsKey(attacker))
+                    {
+                        _playerKillsInRound[attacker]++;
+                    }
+                    else
+                    {
+                        _playerKillsInRound.Add(attacker, 1);
+                    }
                 }
                 // play sound if we found the amount of kills in Config.Sounds
-                if (Config.Sounds.ContainsKey(_playerKillsInRound[attacker])
-                    && Config.Sounds[_playerKillsInRound[attacker]].ContainsKey("_sound"))
+                if (Config.Sounds.ContainsKey(_playerKillsInRound[attacker].ToString())
+                    && Config.Sounds[_playerKillsInRound[attacker].ToString()].TryGetValue("_sound", out string? sound))
                 {
-                    PlaySound(attacker, Config.Sounds[_playerKillsInRound[attacker]]["_sound"]);
-                    PrintMessage(attacker, Config.Sounds[_playerKillsInRound[attacker]]);
+                    PlaySound(attacker, sound);
+                    PrintMessage(attacker, Config.Sounds[_playerKillsInRound[attacker].ToString()]);
+                }
+                else if (Config.Sounds.ContainsKey("firstblood")
+                    && _playerKillsInRound.Count == 1 && _playerKillsInRound[attacker] == 1
+                    && Config.Sounds["firstblood"].TryGetValue("_sound", out string? firstbloodSound))
+                {
+                    PlaySound(attacker, firstbloodSound);
+                    PrintMessage(attacker, Config.Sounds["firstblood"]);
+                }
+                else if (Config.Sounds.ContainsKey("knifekill")
+                    && @event.Weapon.Contains("knife", StringComparison.OrdinalIgnoreCase)
+                    && Config.Sounds["knifekill"].TryGetValue("_sound", out string? knifekillSound))
+                {
+                    PlaySound(attacker, knifekillSound);
+                    PrintMessage(attacker, Config.Sounds["knifekill"]);
+                }
+                else if (Config.Sounds.ContainsKey("teamkill")
+                    && victim != null && victim.IsValid && attacker.Team == victim.Team
+                    && Config.Sounds["teamkill"].TryGetValue("_sound", out string? teamkillSound))
+                {
+                    PlaySound(attacker, teamkillSound);
+                    PrintMessage(attacker, Config.Sounds["teamkill"]);
                 }
             }
             // check victim
@@ -118,19 +143,32 @@ namespace QuakeSounds
             foreach (var entry in Utilities.GetPlayers().Where(
                 p => p.IsValid
                     && !p.IsBot
-                    && !Config.Muted.Contains(p.NetworkIDString)).ToList())
+                    && !Config.PlayersMuted.Contains(p.NetworkIDString)).ToList())
                 filter.Add(entry);
-            // get world entity
-            CWorld? worldEnt = Utilities.FindAllEntitiesByDesignerName<CWorld>("worldent").FirstOrDefault();
-            if (worldEnt == null
-                || !worldEnt.IsValid)
+            if (sound.StartsWith("sounds/"))
             {
-                DebugPrint("Could not find world entity.");
-                return;
+                DebugPrint("Playing quake sound via client command.");
+                player.ExecuteClientCommand($"play {sound}");
             }
-            DebugPrint("Playing quake sound on world entity.");
-            // play sound
-            worldEnt.EmitSound(sound, filter);
+            else if (Config.PlayOn.Equals("player", StringComparison.CurrentCultureIgnoreCase))
+            {
+                DebugPrint("Playing quake sound on player.");
+                player.EmitSound(sound, filter);
+            }
+            else if (Config.PlayOn.Equals("world", StringComparison.CurrentCultureIgnoreCase))
+            {
+                // get world entity
+                CWorld? worldEnt = Utilities.FindAllEntitiesByDesignerName<CWorld>("worldent").FirstOrDefault();
+                if (worldEnt == null
+                    || !worldEnt.IsValid)
+                {
+                    DebugPrint("Could not find world entity.");
+                    return;
+                }
+                DebugPrint("Playing quake sound on world entity.");
+                // play sound
+                worldEnt.EmitSound(sound, filter);
+            }
         }
 
         private void PrintMessage(CCSPlayerController player, Dictionary<string, string> sound)
@@ -138,13 +176,13 @@ namespace QuakeSounds
             foreach (CCSPlayerController entry in Utilities.GetPlayers().Where(
                 p => p.IsValid
                     && !p.IsBot
-                    && !Config.Muted.Contains(p.NetworkIDString)).ToList())
+                    && !Config.PlayersMuted.Contains(p.NetworkIDString)).ToList())
             {
                 string? message = sound.TryGetValue(playerLanguageManager.GetLanguage(new SteamID(entry.NetworkIDString)).TwoLetterISOLanguageName, out var playerMessage)
                     ? playerMessage
                     : (sound.TryGetValue(CoreConfig.ServerLanguage, out var serverMessage)
                         ? serverMessage
-                        : sound.Last().Value);
+                        : sound.First().Value);
                 if (message != null)
                 {
                     // use players language for printing messages
