@@ -6,13 +6,15 @@
 [![issues - cs2-map-modifier](https://img.shields.io/github/issues/Kandru/cs2-quake-sounds)](https://github.com/Kandru/cs2-quake-sounds/issues)
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=C2AVYKGVP9TRG)
 
-This will play the given chat sounds whenever a player types something into the chat and the word or one of the words he typed in matches the given chat sound name. More funny then simply using a command because player will trigger this when typing something random.
+This is a simple Quake Sound plugin for your server. It supports all types of sounds - only a workshop addon is necessesary.
 
 ## Installation
 
 1. Download and extract the latest release from the [GitHub releases page](https://github.com/Kandru/cs2-quake-sounds/releases/).
 2. Move the "QuakeSounds" folder to the `/addons/counterstrikesharp/plugins/` directory.
-3. Restart the server.
+3. Download and install [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager)
+4. Add at least one Workshop Addon with Quake Sounds to the configuration of the MultiAddonManager. I provide the following for use: https://steamcommunity.com/sharedfiles/filedetails/?id=3461824328
+5. Restart the server.
 
 Updating is even easier: simply overwrite all plugin files and they will be reloaded automatically. To automate updates please use our [CS2 Update Manager](https://github.com/Kandru/cs2-update-manager/).
 
@@ -22,53 +24,13 @@ Updating is even easier: simply overwrite all plugin files and they will be relo
 This plugin automatically creates a readable JSON configuration file. This configuration file can be found in `/addons/counterstrikesharp/configs/plugins/QuakeSounds/QuakeSounds.json`.
 
 ```json
-{
-  "enabled": true,
-  "debug": true,
-  "cooldown_player": 0,
-  "cooldown_global": 5,
-  "play_on_player": true,
-  "play_on_bots": false,
-  "play_on_all_players": false,
-  "sounds": {
-    "de": {
-      "1hp": {
-        "path": "Saysound.1hp",
-        "length": 0
-      },
-      "abgefahren": {
-        "path": "Saysound.Abgefahren",
-        "length": 0
-      },
-      "amerika": {
-        "path": "Saysound.America",
-        "length": 0
-      }
-    },
-    "en": {
-      "1hp": {
-        "path": "Saysound.1hp",
-        "length": 0
-      },
-      "america": {
-        "path": "Saysound.America",
-        "length": 0
-      }
-  },
-  "muted": [
-    "[U:1:33290010]"
-  ],
-  "ConfigVersion": 1
-}
+
 ```
 
-Sounds need to be categorized per language. If the player language is not found (and also not the server language) the first found language of the *sounds* dictionary will be used. This dictionary automatically sorts by alphabetically order to allow easier changes to the sound list. This will happen automatically each time the plugin gets loaded.
-
-Sounds need to be inside an workshop addon sound definition file. Otherwise only default sounds from the cs2 internal sound definition files are possible to use.
 
 ## Commands
 
-### QuakeSounds (Server Console Only)
+### quakesounds (Server Console Only)
 
 Ability to run sub-commands:
 
@@ -118,7 +80,92 @@ Build release files (to use on a production game server)
 
 ## FAQ
 
-TODO
+### Which sound should be played when? Can you provide examples?
+
+Please refer to the example configuration found above or search the internet. However, here's a list you can refer to:
+
+3 Frags → TRIPLE KILL
+5 Frags → MULTI KILL
+6 Frags → RAMPAGE
+7 Frags → KILLING SPREE
+8 Frags → DOMINATING
+9 Frags → IMPRESSIVE
+10 Frags → UNSTOPPABLE
+11 Frags → OUTSTANDING
+12 Frags → MEGA KILL
+13 Frags → ULTRA KILL
+14 Frags → EAGLE EYE
+15 Frags → OWNAGE
+16 Frags → COMBO KING
+17 Frags → MANIAC
+18 Frags → LUDICROUS KILL
+19 Frags → BULLSEYE
+20 Frags → EXCELLENT
+21 Frags → PANCAKE
+22 Frags → HEAD HUNTER
+23 Frags → UNREAL
+24 Frags → ASSASSIN
+25 Frags → WICKED SICK
+26 Frags → MASSACRE
+27 Frags → KILLING MACHINE
+28 Frags → MONSTER KILL
+29 Frags → HOLY SHIT
+30 Frags → G O D L I K E
+
+### Where can I find sounds?
+
+Sounds are spread over the internet. We provide a Workshop Addon which you can use: https://steamcommunity.com/sharedfiles/filedetails/?id=3461824328 which contains the following sounds:
+
+#### Male Sounds
+
+```
+QuakeSoundsD.Combowhore
+QuakeSoundsD.Dominating
+QuakeSoundsD.Doublekill
+QuakeSoundsD.Firstblood
+QuakeSoundsD.Godlike
+QuakeSoundsD.Haha
+QuakeSoundsD.Hattrick
+QuakeSoundsD.Headhunter
+QuakeSoundsD.Headshot
+QuakeSoundsD.Holyshit
+QuakeSoundsD.Humiliation
+QuakeSoundsD.Impressive
+QuakeSoundsD.Killingspree
+QuakeSoundsD.Ludicrouskill
+QuakeSoundsD.Megakill
+QuakeSoundsD.Monsterkill
+QuakeSoundsD.Multikill
+QuakeSoundsD.Perfect
+QuakeSoundsD.Play
+QuakeSoundsD.Prepare
+QuakeSoundsD.Rampage
+QuakeSoundsD.Teamkiller
+QuakeSoundsD.Triplekill
+QuakeSoundsD.Ultrakill
+QuakeSoundsD.Unstoppable
+QuakeSoundsD.Wickedsick
+```
+
+#### Female Sounds
+
+```
+QuakeSoundsF.Bottomfeeder
+QuakeSoundsF.Dominating
+QuakeSoundsF.Firstblood
+QuakeSoundsF.Godlike
+QuakeSoundsF.Headshot
+QuakeSoundsF.Holyshit
+QuakeSoundsF.Humiliation
+QuakeSoundsF.Killingspree
+QuakeSoundsF.Monsterkill
+QuakeSoundsF.Multikill
+QuakeSoundsF.Prepare
+QuakeSoundsF.Rampage
+QuakeSoundsF.Ultrakill
+QuakeSoundsF.Unstoppable
+QuakeSoundsF.Wickedsick
+```
 
 ## License
 
