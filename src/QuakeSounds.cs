@@ -51,7 +51,8 @@ namespace QuakeSounds
             CCSPlayerController? victim = @event.Userid;
             // check attacker
             if (attacker != null
-                && attacker.IsValid)
+                && attacker.IsValid
+                && !attacker.IsBot || !Config.IgnoreBots)
             {
                 // check for self kill or team kill and whether to count them
                 if (attacker != victim || Config.CountSelfKills

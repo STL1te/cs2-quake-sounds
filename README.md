@@ -28,6 +28,7 @@ This plugin automatically creates a readable JSON configuration file. This confi
   "enabled": true,
   "debug": false,
   "play_on": "player",
+  "ignore_bots": true,
   "enable_center_message": true,
   "center_message_type": "default",
   "enable_chat_message": true,
