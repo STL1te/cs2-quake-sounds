@@ -63,6 +63,7 @@ namespace QuakeSounds
                     {
                         _playerKillsInRound.Add(attacker, 1);
                     }
+                    DebugPrint($"Player {attacker.PlayerName} has {_playerKillsInRound[attacker]} kills.");
                 }
                 // play sound if we found the amount of kills in Config.Sounds
                 if (_playerKillsInRound.ContainsKey(attacker)
@@ -73,37 +74,37 @@ namespace QuakeSounds
                     PrintMessage(attacker, Config.Sounds[_playerKillsInRound[attacker].ToString()]);
                 }
                 // check for self kill
-                else if (Config.Sounds.ContainsKey("selfkill")
+                else if (Config.Sounds.TryGetValue("selfkill", out Dictionary<string, string>? selfkillSound)
                     && attacker == victim
-                    && Config.Sounds["selfkill"].TryGetValue("_sound", out string? selfkillSound))
+                    && selfkillSound.TryGetValue("_sound", out string? selfkillSoundName))
                 {
-                    PlaySound(attacker, selfkillSound, "world");
-                    PrintMessage(attacker, Config.Sounds["selfkill"]);
+                    PlaySound(attacker, selfkillSoundName, "world");
+                    PrintMessage(attacker, selfkillSound);
                 }
                 // check for team kill
-                else if (Config.Sounds.ContainsKey("teamkill")
+                else if (Config.Sounds.TryGetValue("teamkill", out Dictionary<string, string>? teamkillSound)
                     && victim != null && victim.IsValid && attacker.Team == victim.Team
-                    && Config.Sounds["teamkill"].TryGetValue("_sound", out string? teamkillSound))
+                    && teamkillSound.TryGetValue("_sound", out string? teamkillSoundName))
                 {
-                    PlaySound(attacker, teamkillSound);
-                    PrintMessage(attacker, Config.Sounds["teamkill"]);
+                    PlaySound(attacker, teamkillSoundName);
+                    PrintMessage(attacker, teamkillSound);
                 }
                 // check for first blood
-                else if (Config.Sounds.ContainsKey("firstblood")
+                else if (Config.Sounds.TryGetValue("firstblood", out Dictionary<string, string>? firstbloodSound)
                     && _playerKillsInRound.ContainsKey(attacker)
                     && _playerKillsInRound.Count == 1 && _playerKillsInRound[attacker] == 1
-                    && Config.Sounds["firstblood"].TryGetValue("_sound", out string? firstbloodSound))
+                    && firstbloodSound.TryGetValue("_sound", out string? firstbloodSoundName))
                 {
-                    PlaySound(attacker, firstbloodSound);
-                    PrintMessage(attacker, Config.Sounds["firstblood"]);
+                    PlaySound(attacker, firstbloodSoundName);
+                    PrintMessage(attacker, firstbloodSound);
                 }
                 // check for knife kill
-                else if (Config.Sounds.ContainsKey("knifekill")
+                else if (Config.Sounds.TryGetValue("knifekill", out Dictionary<string, string>? knifekillSound)
                     && @event.Weapon.Contains("knife", StringComparison.OrdinalIgnoreCase)
-                    && Config.Sounds["knifekill"].TryGetValue("_sound", out string? knifekillSound))
+                    && knifekillSound.TryGetValue("_sound", out string? knifekillSoundName))
                 {
-                    PlaySound(attacker, knifekillSound);
-                    PrintMessage(attacker, Config.Sounds["knifekill"]);
+                    PlaySound(attacker, knifekillSoundName);
+                    PrintMessage(attacker, knifekillSound);
                 }
             }
             // check victim
