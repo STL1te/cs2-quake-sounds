@@ -65,19 +65,31 @@ namespace QuakeSounds
                     }
                 }
                 // play sound if we found the amount of kills in Config.Sounds
-                if (Config.Sounds.ContainsKey(_playerKillsInRound[attacker].ToString())
+                if (_playerKillsInRound.ContainsKey(attacker)
+                    && Config.Sounds.ContainsKey(_playerKillsInRound[attacker].ToString())
                     && Config.Sounds[_playerKillsInRound[attacker].ToString()].TryGetValue("_sound", out string? sound))
                 {
                     PlaySound(attacker, sound);
                     PrintMessage(attacker, Config.Sounds[_playerKillsInRound[attacker].ToString()]);
                 }
+                // check for self kill
+                else if (Config.Sounds.ContainsKey("selfkill")
+                    && attacker == victim
+                    && Config.Sounds["selfkill"].TryGetValue("_sound", out string? selfkillSound))
+                {
+                    PlaySound(attacker, selfkillSound, "world");
+                    PrintMessage(attacker, Config.Sounds["selfkill"]);
+                }
+                // check for first blood
                 else if (Config.Sounds.ContainsKey("firstblood")
+                    && _playerKillsInRound.ContainsKey(attacker)
                     && _playerKillsInRound.Count == 1 && _playerKillsInRound[attacker] == 1
                     && Config.Sounds["firstblood"].TryGetValue("_sound", out string? firstbloodSound))
                 {
                     PlaySound(attacker, firstbloodSound);
                     PrintMessage(attacker, Config.Sounds["firstblood"]);
                 }
+                // check for knife kill
                 else if (Config.Sounds.ContainsKey("knifekill")
                     && @event.Weapon.Contains("knife", StringComparison.OrdinalIgnoreCase)
                     && Config.Sounds["knifekill"].TryGetValue("_sound", out string? knifekillSound))
@@ -85,6 +97,7 @@ namespace QuakeSounds
                     PlaySound(attacker, knifekillSound);
                     PrintMessage(attacker, Config.Sounds["knifekill"]);
                 }
+                // check for team kill
                 else if (Config.Sounds.ContainsKey("teamkill")
                     && victim != null && victim.IsValid && attacker.Team == victim.Team
                     && Config.Sounds["teamkill"].TryGetValue("_sound", out string? teamkillSound))
@@ -136,7 +149,7 @@ namespace QuakeSounds
             return HookResult.Continue;
         }
 
-        private void PlaySound(CCSPlayerController player, string sound)
+        private void PlaySound(CCSPlayerController player, string sound, string? playOn = null)
         {
             DebugPrint($"Playing quake sound {sound} for player {player.PlayerName}.");
             // prepare recipient filter (to avoid playing sounds for muted players)
@@ -151,12 +164,14 @@ namespace QuakeSounds
                 DebugPrint("Playing quake sound via client command.");
                 player.ExecuteClientCommand($"play {sound}");
             }
-            else if (Config.PlayOn.Equals("player", StringComparison.CurrentCultureIgnoreCase))
+            else if (Config.PlayOn.Equals("player", StringComparison.CurrentCultureIgnoreCase) && playOn == null
+                    || playOn != null && playOn == "player")
             {
                 DebugPrint("Playing quake sound on player.");
                 player.EmitSound(sound, filter);
             }
-            else if (Config.PlayOn.Equals("world", StringComparison.CurrentCultureIgnoreCase))
+            else if (Config.PlayOn.Equals("world", StringComparison.CurrentCultureIgnoreCase) && playOn == null
+                    || playOn != null && playOn == "world")
             {
                 // get world entity
                 CWorld? worldEnt = Utilities.FindAllEntitiesByDesignerName<CWorld>("worldent").FirstOrDefault();
