@@ -33,6 +33,8 @@ This plugin automatically creates a readable JSON configuration file. This confi
   "enable_chat_message": true,
   "count_self_kills": false,
   "count_team_kills": false,
+  "reset_kills_on_death": true,
+  "reset_kills_on_round_start": true,
   "sounds": {
     "3": {
       "de": "Dreifach-Kill",
@@ -129,6 +131,14 @@ Whether or not to count self kills.
 ### count_team_kills
 
 Whether or not to count team kills.
+
+### reset_kills_on_death
+
+Whether or not to reset kill streak on player death.
+
+### reset_kills_on_round_start
+
+Whether or not to reste kill streak on round start.
 
 ### sounds
 

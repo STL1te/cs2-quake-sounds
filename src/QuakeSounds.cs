@@ -39,7 +39,7 @@ namespace QuakeSounds
 
         private HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
         {
-            _playerKillsInRound.Clear();
+            if (Config.ResetKillsOnRoundStart) _playerKillsInRound.Clear();
             return HookResult.Continue;
         }
 
@@ -95,7 +95,8 @@ namespace QuakeSounds
             }
             // check victim
             if (victim != null
-                && victim.IsValid)
+                && victim.IsValid
+                && Config.ResetKillsOnDeath)
             {
                 _playerKillsInRound.Remove(victim);
             }

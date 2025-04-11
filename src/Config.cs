@@ -23,6 +23,10 @@ namespace QuakeSounds
         [JsonPropertyName("count_self_kills")] public bool CountSelfKills { get; set; } = false;
         // count team kills
         [JsonPropertyName("count_team_kills")] public bool CountTeamKills { get; set; } = false;
+        // reset kills on death
+        [JsonPropertyName("reset_kills_on_death")] public bool ResetKillsOnDeath { get; set; } = true;
+        // reset kills on round start
+        [JsonPropertyName("reset_kills_on_round_start")] public bool ResetKillsOnRoundStart { get; set; } = true;
         // sounds dict (language, string to match, sound path)
         [JsonPropertyName("sounds")] public Dictionary<string, Dictionary<string, string>> Sounds { get; set; } = [];
         // muted players
