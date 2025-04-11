@@ -31,6 +31,8 @@ This plugin automatically creates a readable JSON configuration file. This confi
   "enable_center_message": true,
   "center_message_type": "default",
   "enable_chat_message": true,
+  "count_self_kills": false,
+  "count_team_kills": false,
   "sounds": {
     "3": {
       "de": "Dreifach-Kill",
@@ -119,6 +121,14 @@ Type of the center message. Can be one of the following:
 ### enable_chat_message
 
 Whether or not to enable chat messages.
+
+### count_self_kills
+
+Whether or not to count self kills.
+
+### count_team_kills
+
+Whether or not to count team kills.
 
 ### sounds
 
