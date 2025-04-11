@@ -48,8 +48,8 @@ This plugin automatically creates a readable JSON configuration file. This confi
       "_sound": "QuakeSoundsD.Multikill"
     },
     "6": {
-      "de": "Multi-Kill",
-      "en": "Multi Kill",
+      "de": "Randale",
+      "en": "Rampage",
       "_sound": "QuakeSoundsD.Rampage"
     },
     "7": {
