@@ -6,7 +6,7 @@
 [![issues - cs2-map-modifier](https://img.shields.io/github/issues/Kandru/cs2-quake-sounds)](https://github.com/Kandru/cs2-quake-sounds/issues)
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=C2AVYKGVP9TRG)
 
-This is a simple Quake Sound plugin for your server. It supports all types of sounds - only a workshop addon is necessesary.
+This is a simple Quake Sound plugin for your server. It supports all types of sounds - only a workshop addon is necessesary. You can have sounds for self kills, team kills, knife kills or when players have reached a specific amount of kills. Can be configured to reset after player death and / or after round end. Will reset on map end.
 
 ## Installation
 
