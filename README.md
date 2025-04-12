@@ -97,6 +97,11 @@ This plugin automatically creates a readable JSON configuration file. This confi
       "de": "Kopfschuss",
       "en": "Headshot",
       "_sound": "QuakeSoundsD.Headshot"
+    },
+    "weapon_hegrenade": {
+      "de": "Granaten-Kill",
+      "en": "Grenade Kill",
+      "_sound": "QuakeSoundsD.Perfect"
     }
   },
   "player_muted": [
@@ -169,6 +174,8 @@ List of all sounds. The Key is either the amount of kills or a special key:
 - knifekill
 - selfkill
 - teamkill
+
+All weapons can make a sound on kill, e.g. HE-Grenade (weapon_hegrenade). Just use *weapon_<name>* as a key.
 
 All sounds will contain a list of at least two entries. One is the *_sound* file name or path. If it is a file name you will need a Workshop Addon where these file names are defined. If you use a path, e.g. *sounds/cs2/quakesounds/default/haha.vsnd* you don't need a Workshop Addon. However the player must have the given file in his game files somewhere.
 

@@ -55,6 +55,10 @@ namespace QuakeSounds
             CCSPlayerController? attacker = @event.Attacker;
             CCSPlayerController? victim = @event.Userid;
             DebugPrint($"Player {attacker?.PlayerName} killed by {victim?.PlayerName} with weapon {@event.Weapon}.");
+            // get weapon key
+            string weaponKey = @event.Weapon.StartsWith("weapon_", StringComparison.OrdinalIgnoreCase)
+                    ? @event.Weapon.ToLower()
+                    : "weapon_" + @event.Weapon.ToLower();
             // check attacker
             if (attacker != null
                 && attacker.IsValid
@@ -122,6 +126,13 @@ namespace QuakeSounds
                 {
                     PlaySound(attacker, headshotSoundName);
                     PrintMessage(attacker, headshotSound);
+                }
+                // check for specific weapon sound (e.g. grenades and stuff)
+                else if (Config.Sounds.TryGetValue(weaponKey, out Dictionary<string, string>? weaponSound)
+                    && weaponSound.TryGetValue("_sound", out string? weaponSoundName))
+                {
+                    PlaySound(attacker, weaponSoundName);
+                    PrintMessage(attacker, weaponSound);
                 }
             }
             // check victim
