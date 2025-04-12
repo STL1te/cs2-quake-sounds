@@ -52,7 +52,7 @@ namespace QuakeSounds
             // check attacker
             if (attacker != null
                 && attacker.IsValid
-                && !attacker.IsBot || !Config.IgnoreBots)
+                && (!attacker.IsBot || !Config.IgnoreBots))
             {
                 // check for self kill or team kill and whether to count them
                 if (attacker != victim || Config.CountSelfKills
