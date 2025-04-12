@@ -172,6 +172,30 @@ List of all sounds. The Key is either the amount of kills or a special key:
 
 All sounds will contain a list of at least two entries. One is the *_sound* file name or path. If it is a file name you will need a Workshop Addon where these file names are defined. If you use a path, e.g. *sounds/cs2/quakesounds/default/haha.vsnd* you don't need a Workshop Addon. However the player must have the given file in his game files somewhere.
 
+#### Example with Workshop Addon Soundevent name
+
+All settings done in the Soundevent file for this specific sound name apply (e.g. Volume, sound distance, pitch, ...). Other players will hear it because the sound is positional. Players can change the volume via ingame settings.
+
+```json
+"headshot": {
+  "de": "Kopfschuss",
+  "en": "Headshot",
+  "_sound": "QuakeSoundsD.Headshot"
+}
+```
+
+#### Example with Workshop Addon sound path
+
+No further settings possible. Will play at 100% sound volume of the sound file used. Sound is non-positional. Players cannot change the volume via ingame settings.
+
+```json
+"headshot": {
+  "de": "Kopfschuss",
+  "en": "Headshot",
+  "_sound": "sounds/cs2/quakesounds/default/headshot.vsnd"
+}
+```
+
 ### player_muted
 
 List of all muted Steam IDs. Players can use *!qs* to mute or unmute themself.
