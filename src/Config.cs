@@ -7,10 +7,12 @@ namespace QuakeSounds
 {
     public class PluginConfig : BasePluginConfig
     {
-        // disabled
+        // Enabled or disabled
         [JsonPropertyName("enabled")] public bool Enabled { get; set; } = true;
         // debug prints
         [JsonPropertyName("debug")] public bool Debug { get; set; } = false;
+        // enable during warmup
+        [JsonPropertyName("enabled_during_warmup")] public bool EnabledDuringWarmup { get; set; } = true;
         // where to play sounds on (player, world)
         [JsonPropertyName("play_on")] public string PlayOn { get; set; } = "player";
         // ignore bots

@@ -47,6 +47,12 @@ namespace QuakeSounds
 
         private HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info)
         {
+            if (!Config.EnabledDuringWarmup && (bool)GetGameRule("WarmupPeriod")!)
+            {
+                DebugPrint("Ignoring during warmup.");
+                return HookResult.Continue;
+            }
+
             if (@event.Weapon.ToLower() == "world" && Config.IgnoreWorldDamage)
             {
                 DebugPrint("Ignoring world damage.");

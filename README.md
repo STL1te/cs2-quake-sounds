@@ -27,6 +27,7 @@ This plugin automatically creates a readable JSON configuration file. This confi
 {
   "enabled": true,
   "debug": false,
+  "enabled_during_warmup": true,
   "play_on": "player",
   "ignore_bots": true,
   "ignore_world_damage": true,
@@ -121,6 +122,10 @@ Whether this plug-in is enabled or not.
 ### debug
 
 Debug mode. Only necessary during development or testing.
+
+### enabled_during_warmup
+
+Whether or not quake sounds are enabled during warmup.
 
 ### play_on
 Determines where the sound will play: either at the player's position or at a fixed world position. Note that using a world position can result in poorly placed sounds on custom maps, making them hard to hear. Playing the sound at the player's position may reveal their location. If you use a full sound path instead of a sound name, the sound will play at maximum volume without directional effects or volume control.
