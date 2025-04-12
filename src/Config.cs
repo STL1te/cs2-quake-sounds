@@ -15,6 +15,8 @@ namespace QuakeSounds
         [JsonPropertyName("play_on")] public string PlayOn { get; set; } = "player";
         // ignore bots
         [JsonPropertyName("ignore_bots")] public bool IgnoreBots { get; set; } = true;
+        // ignore world damage
+        [JsonPropertyName("ignore_world_damage")] public bool IgnoreWorldDamage { get; set; } = true;
         // enable center message
         [JsonPropertyName("enable_center_message")] public bool CenterMessage { get; set; } = true;
         // center message typ (default, alert or html)

@@ -29,6 +29,7 @@ This plugin automatically creates a readable JSON configuration file. This confi
   "debug": false,
   "play_on": "player",
   "ignore_bots": true,
+  "ignore_world_damage": true,
   "enable_center_message": true,
   "center_message_type": "default",
   "enable_chat_message": true,
@@ -113,6 +114,14 @@ Debug mode. Only necessary during development or testing.
 
 ### play_on
 Determines where the sound will play: either at the player's position or at a fixed world position. Note that using a world position can result in poorly placed sounds on custom maps, making them hard to hear. Playing the sound at the player's position may reveal their location. If you use a full sound path instead of a sound name, the sound will play at maximum volume without directional effects or volume control.
+
+### ignore_bots
+
+Whether or not bots will make quake sounds. If disabled only players will make quake sounds.
+
+### ignore_world_damage
+
+Whether or not to ignore world damage (e.g. by switchting to spectator). Makes sense to leave enabled.
 
 ### enable_center_message
 

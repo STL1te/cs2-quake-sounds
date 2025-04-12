@@ -47,8 +47,14 @@ namespace QuakeSounds
 
         private HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info)
         {
+            if (@event.Weapon.ToLower() == "world" && Config.IgnoreWorldDamage)
+            {
+                DebugPrint("Ignoring world damage.");
+                return HookResult.Continue;
+            }
             CCSPlayerController? attacker = @event.Attacker;
             CCSPlayerController? victim = @event.Userid;
+            DebugPrint($"Player {attacker?.PlayerName} killed by {victim?.PlayerName} with weapon {@event.Weapon}.");
             // check attacker
             if (attacker != null
                 && attacker.IsValid
