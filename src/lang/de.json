@@ -11,7 +11,7 @@
     "sounds.muted": "[QuakeSounds] {default}Alle Sounds für dich deaktiviert.",
     "sounds.unmuted": "[QuakeSounds] {default}Alle Sounds für dich aktiviert.",
     "center.msg.player": "{message}",
-    "center.msg.other": "{player} hat ein ein(en) {message}",
+    "center.msg.other": "{player} hat ein(en) {message}",
     "chat.msg.player": "[QuakeSounds] {default}Du hast einen {green}{message}",
     "chat.msg.other": "[QuakeSounds] {green}{player} {default}hat einen {green}{message}"
 }
