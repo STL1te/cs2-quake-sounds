@@ -217,6 +217,12 @@ List of all players who used *!lang* to set their language. Currently it seems t
 
 Ability to run sub-commands:
 
+```
+quakesounds reload
+quakesounds disable
+quakesounds enable
+```
+
 #### reload
 
 Reloads the configuration.
