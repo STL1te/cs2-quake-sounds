@@ -358,6 +358,26 @@ QuakeSoundsF.Unstoppable
 QuakeSoundsF.Wickedsick
 ```
 
+### I cannot hear any sounds and I used your provided example configuration and MultiAddonManager
+
+Make sure the **MultiAddonManager** does not have any errors in the server console. Make also sure your Client is actually asked during connecting to your server to download the Quake Sounds. If the client is not asked you do **NOT** have the files on your system and will **NOT** hear anything.
+
+When having everything installed correctly you **MUST** see the following inside your server console upon connection:
+
+```
+[MultiAddonManager] Addon 3461824328 downloaded successfully
+[MultiAddonManager] Client kalle (XXXX) connected:
+[MultiAddonManager] first connection, sending addon 3461824328
+[MultiAddonManager] Client kalle (XXXX) connected:
+[MultiAddonManager] reconnected within the interval and has all addons, allowing
+```
+
+Also make sure your Metamod version is up to date. Otherwise MultiAddonManager will not work:
+
+```
+[META] Failed to load plugin addons/multiaddonmanager/bin/multiaddonmanager: Plugin requires newer Metamod version (17 > 16)
+```
+
 ## License
 
 Released under [GPLv3](/LICENSE) by [@Kandru](https://github.com/Kandru).
