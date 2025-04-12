@@ -236,6 +236,7 @@ Build release files (to use on a production game server)
 
 Please refer to the example configuration found above or search the internet. However, here's a list you can refer to:
 
+```
 3 Frags → TRIPLE KILL
 5 Frags → MULTI KILL
 6 Frags → RAMPAGE
@@ -263,6 +264,7 @@ Please refer to the example configuration found above or search the internet. Ho
 28 Frags → MONSTER KILL
 29 Frags → HOLY SHIT
 30 Frags → G O D L I K E
+```
 
 ### Where can I find sounds?
 
