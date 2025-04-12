@@ -115,6 +115,14 @@ namespace QuakeSounds
                     PlaySound(attacker, knifekillSoundName);
                     PrintMessage(attacker, knifekillSound);
                 }
+                // check for headshot kill
+                else if (Config.Sounds.TryGetValue("headshot", out Dictionary<string, string>? headshotSound)
+                    && @event.Headshot
+                    && headshotSound.TryGetValue("_sound", out string? headshotSoundName))
+                {
+                    PlaySound(attacker, headshotSoundName);
+                    PrintMessage(attacker, headshotSound);
+                }
             }
             // check victim
             if (victim != null

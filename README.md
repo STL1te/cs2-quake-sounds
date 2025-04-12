@@ -92,6 +92,11 @@ This plugin automatically creates a readable JSON configuration file. This confi
       "de": "Selbsttötung",
       "en": "Self Kill",
       "_sound": "QuakeSoundsD.Perfect"
+    },
+    "headshot": {
+      "de": "Kopfschuss",
+      "en": "Headshot",
+      "_sound": "QuakeSoundsD.Headshot"
     }
   },
   "player_muted": [
@@ -160,9 +165,10 @@ Whether or not to reste kill streak on round start.
 List of all sounds. The Key is either the amount of kills or a special key:
 
 - firstblood
+- headshot
 - knifekill
-- teamkill
 - selfkill
+- teamkill
 
 All sounds will contain a list of at least two entries. One is the *_sound* file name or path. If it is a file name you will need a Workshop Addon where these file names are defined. If you use a path, e.g. *sounds/cs2/quakesounds/default/haha.vsnd* you don't need a Workshop Addon. However the player must have the given file in his game files somewhere.
 
