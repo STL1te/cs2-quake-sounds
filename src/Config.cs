@@ -77,25 +77,30 @@ namespace QuakeSounds
             }
         }
 
-        private void LoadPlayerLanguage(string steamID)
+        private void LoadPlayerLanguage(string? steamID)
         {
-            if (!Config.PlayerLanguages.ContainsKey(steamID)
-                || Config.PlayerLanguages[steamID] == "") return;
-            playerLanguageManager.SetLanguage(
-                new SteamID(steamID),
-                new System.Globalization.CultureInfo(Config.PlayerLanguages[steamID]));
+            if (string.IsNullOrWhiteSpace(steamID)) return;
+            // check if the player has a language set
+            if (Config.PlayerLanguages.TryGetValue(steamID, out var language) && !string.IsNullOrWhiteSpace(language))
+            {
+                // set the language for the player
+                playerLanguageManager.SetLanguage(
+                    new SteamID(steamID),
+                    new System.Globalization.CultureInfo(language));
+            }
         }
 
-        private void SavePlayerLanguage(string steamID, string language)
+        private void SavePlayerLanguage(string? steamID, string language)
         {
-            if (language == null
-                || language == "") return;
-            // set language for player
-            if (!Config.PlayerLanguages.ContainsKey(steamID))
-                Config.PlayerLanguages.Add(steamID, language);
-            else
+            if (string.IsNullOrWhiteSpace(steamID) || string.IsNullOrWhiteSpace(language)) return;
+            // Try to add or update the player's language
+            if (!Config.PlayerLanguages.TryAdd(steamID, language))
+            {
                 Config.PlayerLanguages[steamID] = language;
+            }
+            // write config
             Config.Update();
+            // set the language for the player
             playerLanguageManager.SetLanguage(new SteamID(steamID), new System.Globalization.CultureInfo(language));
             DebugPrint($"Saved language for player {steamID} to {language}.");
         }
