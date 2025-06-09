@@ -29,6 +29,7 @@ This plugin automatically creates a readable JSON configuration file. This confi
   "debug": false,
   "enabled_during_warmup": true,
   "play_on": "player",
+  "filter_sounds": "all",
   "ignore_bots": true,
   "ignore_world_damage": true,
   "enable_center_message": true,
@@ -128,7 +129,20 @@ Debug mode. Only necessary during development or testing.
 Whether or not quake sounds are enabled during warmup.
 
 ### play_on
+
 Determines where the sound will play: either at the player's position or at a fixed world position. Note that using a world position can result in poorly placed sounds on custom maps, making them hard to hear. Playing the sound at the player's position may reveal their location. If you use a full sound path instead of a sound name, the sound will play at maximum volume without directional effects or volume control.
+
+### filter_sounds
+
+Who is able to listen to sounds. Defaults to "all":
+
+- all -> everyone will hear the sound
+- attacker_team -> everyone in the attacker team will hear the sound
+- victim_team -> everyone in the victim team will hear the sound
+- involved -> both attacker and victim will hear the sound
+- attacker -> only the attacker will hear the sound
+- victim -> only the victim will hear the sound
+- spectator -> only spectators will hear the sound
 
 ### ignore_bots
 
@@ -192,7 +206,8 @@ All settings done in the Soundevent file for this specific sound name apply (e.g
 "headshot": {
   "de": "Kopfschuss",
   "en": "Headshot",
-  "_sound": "QuakeSoundsD.Headshot"
+  "_sound": "QuakeSoundsD.Headshot",
+  "_filter": "all" <-- optional to set players that can hear the sound. Can either be set globally (check config above or get overriden per sound)
 }
 ```
 
@@ -204,7 +219,8 @@ No further settings possible. Will play at 100% sound volume of the sound file u
 "headshot": {
   "de": "Kopfschuss",
   "en": "Headshot",
-  "_sound": "sounds/cs2/quakesounds/default/headshot.vsnd"
+  "_sound": "sounds/cs2/quakesounds/default/headshot.vsnd",
+  "_filter": "all" <-- optional to set players that can hear the sound. Can either be set globally (check config above or get overriden per sound)
 }
 ```
 

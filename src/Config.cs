@@ -15,6 +15,8 @@ namespace QuakeSounds
         [JsonPropertyName("enabled_during_warmup")] public bool EnabledDuringWarmup { get; set; } = true;
         // where to play sounds on (player, world)
         [JsonPropertyName("play_on")] public string PlayOn { get; set; } = "player";
+        // set who can hear the sounds (all, attacker_team, victim_team, involved, attacker, victim, spectator)
+        [JsonPropertyName("filter_sounds")] public string FilterSounds { get; set; } = "all";
         // ignore bots
         [JsonPropertyName("ignore_bots")] public bool IgnoreBots { get; set; } = true;
         // ignore world damage
