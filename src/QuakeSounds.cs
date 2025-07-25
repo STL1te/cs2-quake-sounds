@@ -312,6 +312,9 @@ namespace QuakeSounds
             // declare local variable to print message correctly depending on filter
             void DoPrint(CCSPlayerController entry, CCSPlayerController player, Dictionary<string, string> sound)
             {
+                if (string.IsNullOrEmpty(entry.NetworkIDString))
+                    return;
+                
                 string? message = sound.TryGetValue(playerLanguageManager.GetLanguage(new SteamID(entry.NetworkIDString)).TwoLetterISOLanguageName, out var playerMessage)
                     ? playerMessage
                     : (sound.TryGetValue(CoreConfig.ServerLanguage, out var serverMessage)
